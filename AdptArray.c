@@ -1,15 +1,29 @@
-#include "AdptArray.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
+#include "AdptArray.h"
 
-/* Define the structure of the adaptive array */
 struct AdptArray_
 {
-    int capacity;          /* maximum capacity of the array */
-    int size;              /* current size of the array */
-    COPY_FUNC copy_func;   /* function to copy an element of the array */
-    DEL_FUNC del_func;     /* function to delete an element of the array */
-    PRINT_FUNC print_func; /* function to print an element of the array */
-    PElement *elements;    /* pointer to array of elements */
+    PElement *elements;
+    int size;
+    COPY_FUNC copy_func;
+    DEL_FUNC del_func;
+    PRINT_FUNC print_func;
 };
+
+PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func, PRINT_FUNC print_func)
+{
+    PAdptArray adpt_array = malloc(sizeof(struct AdptArray_));
+    if (adpt_array == NULL)
+    {
+        return NULL;
+    }
+
+    adpt_array->elements = NULL;
+    adpt_array->size = 0;
+    adpt_array->copy_func = copy_func;
+    adpt_array->del_func = del_func;
+    adpt_array->print_func = print_func;
+
+    return adpt_array;
+}
