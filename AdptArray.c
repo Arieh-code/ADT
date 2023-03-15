@@ -31,3 +31,30 @@ PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func, PRINT_FUNC pr
 
     return adpt_array;
 }
+
+// Delete an adaptive array and its elements
+void DeleteAdptArray(PAdptArray adpt_array)
+{
+    if (adpt_array == NULL)
+    {
+        return;
+    }
+
+    // Free each element in the adaptive array
+    if (adpt_array->elements != NULL)
+    {
+        for (int i = 0; i < adpt_array->size; i++)
+        {
+            if (adpt_array->elements[i] != NULL)
+            {
+                adpt_array->del_func(adpt_array->elements[i]);
+            }
+        }
+
+        // Free the memory allocated for the adaptive array's elements
+        free(adpt_array->elements);
+    }
+
+    // Free the memory allocated for the adaptive array
+    free(adpt_array);
+}
