@@ -58,3 +58,36 @@ void DeleteAdptArray(PAdptArray adpt_array)
     // Free the memory allocated for the adaptive array
     free(adpt_array);
 }
+
+Result SetAdptArrayAt(PAdptArray adpt_array, int index, PElement element)
+{
+    if (index < 0)
+    {
+        return FAIL;
+    }
+
+    if (index >= adpt_array->size)
+    {
+        PElement *new_elements = realloc(adpt_array->elements, (index + 1) * sizeof(PElement));
+        if (new_elements == NULL)
+        {
+            return FAIL;
+        }
+
+        adpt_array->elements = new_elements;
+        for (int i = adpt_array->size; i <= index; i++)
+        {
+            adpt_array->elements[i] = NULL;
+        }
+        adpt_array->size = index + 1;
+    }
+
+    if (adpt_array->elements[index] != NULL)
+    {
+        adpt_array->del_func(adpt_array->elements[index]);
+    }
+
+    adpt_array->elements[index] = adpt_array->copy_func(element);
+
+    return SUCCESS;
+}
