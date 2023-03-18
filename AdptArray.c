@@ -106,3 +106,14 @@ int GetAdptArraySize(PAdptArray adpt_array)
 {
     return adpt_array->size;
 }
+
+void PrintDB(PAdptArray adpt_array)
+{
+    for (int i = 0; i < adpt_array->size; i++)
+    {
+        if (adpt_array->elements[i] != NULL)
+        {
+            adpt_array->print_func(adpt_array->elements[i]);
+        }
+    }
+}
