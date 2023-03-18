@@ -101,3 +101,8 @@ PElement GetAdptArrayAt(PAdptArray adpt_array, int index)
 
     return adpt_array->copy_func(adpt_array->elements[index]);
 }
+
+int GetAdptArraySize(PAdptArray adpt_array)
+{
+    return adpt_array->size;
+}
