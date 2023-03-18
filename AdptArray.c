@@ -91,3 +91,13 @@ Result SetAdptArrayAt(PAdptArray adpt_array, int index, PElement element)
 
     return SUCCESS;
 }
+
+PElement GetAdptArrayAt(PAdptArray adpt_array, int index)
+{
+    if (index < 0 || index >= adpt_array->size || adpt_array->elements[index] == NULL)
+    {
+        return NULL;
+    }
+
+    return adpt_array->copy_func(adpt_array->elements[index]);
+}
