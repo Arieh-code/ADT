@@ -61,59 +61,59 @@ void DeleteAdptArray(PAdptArray adpt_array)
 
 Result SetAdptArrayAt(PAdptArray adpt_array, int index, PElement element)
 {
-    if (index < 0)
+    if (index < 0) // Check if index is less than zero
     {
-        return FAIL;
+        return FAIL; // Return failure if index is less than zero
     }
 
-    if (index >= adpt_array->size)
+    if (index >= adpt_array->size) // Check if index is greater than or equal to size of array
     {
-        PElement *new_elements = realloc(adpt_array->elements, (index + 1) * sizeof(PElement));
-        if (new_elements == NULL)
+        PElement *new_elements = realloc(adpt_array->elements, (index + 1) * sizeof(PElement)); // Allocate memory for new elements
+        if (new_elements == NULL)                                                               // Check if allocation failed
         {
-            return FAIL;
+            return FAIL; // Return failure if allocation failed
         }
 
-        adpt_array->elements = new_elements;
-        for (int i = adpt_array->size; i <= index; i++)
+        adpt_array->elements = new_elements;            // Assign new elements to array
+        for (int i = adpt_array->size; i <= index; i++) // Set values of new elements to NULL
         {
             adpt_array->elements[i] = NULL;
         }
-        adpt_array->size = index + 1;
+        adpt_array->size = index + 1; // Update size of array
     }
 
-    if (adpt_array->elements[index] != NULL)
+    if (adpt_array->elements[index] != NULL) // Check if element at index is not NULL
     {
-        adpt_array->del_func(adpt_array->elements[index]);
+        adpt_array->del_func(adpt_array->elements[index]); // Call delete function to free memory
     }
 
-    adpt_array->elements[index] = adpt_array->copy_func(element);
+    adpt_array->elements[index] = adpt_array->copy_func(element); // Copy element to array
 
-    return SUCCESS;
+    return SUCCESS; // Return success
 }
 
 PElement GetAdptArrayAt(PAdptArray adpt_array, int index)
 {
-    if (index < 0 || index >= adpt_array->size || adpt_array->elements[index] == NULL)
+    if (index < 0 || index >= adpt_array->size || adpt_array->elements[index] == NULL) // Check if index is out of bounds or element is NULL
     {
-        return NULL;
+        return NULL; // Return NULL if index is out of bounds or element is NULL
     }
 
-    return adpt_array->copy_func(adpt_array->elements[index]);
+    return adpt_array->copy_func(adpt_array->elements[index]); // Copy element to return value
 }
 
 int GetAdptArraySize(PAdptArray adpt_array)
 {
-    return adpt_array->size;
+    return adpt_array->size; // Return size of array
 }
 
 void PrintDB(PAdptArray adpt_array)
 {
-    for (int i = 0; i < adpt_array->size; i++)
+    for (int i = 0; i < adpt_array->size; i++) // Iterate over each element in the array
     {
-        if (adpt_array->elements[i] != NULL)
+        if (adpt_array->elements[i] != NULL) // Check if element is not NULL
         {
-            adpt_array->print_func(adpt_array->elements[i]);
+            adpt_array->print_func(adpt_array->elements[i]); // Print element
         }
     }
 }
